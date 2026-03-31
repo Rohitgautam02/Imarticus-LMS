@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documents - Imarticus LMS</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="site-header" id="site-header"></header>
+
+    <div class="main-container">
+        <h1 class="page-title">Document Summariser</h1>
+        <p style="color:#777; margin-bottom:24px; font-size:14px;">Upload a document (PDF, DOCX, or TXT) and get an AI-generated summary using Google Gemini.</p>
+
+        <div id="alert-container"></div>
+
+        <!-- upload area -->
+        <div class="upload-area" id="upload-area" onclick="document.getElementById('file-input').click()">
+            <div class="upload-icon">&#128196;</div>
+            <p><strong>Click to upload</strong> or drag and drop</p>
+            <p style="font-size:12px; color:#aaa; margin-top:6px;">PDF, DOCX, TXT (Max 10MB)</p>
+            <input type="file" id="file-input" accept=".pdf,.docx,.doc,.txt" style="display:none">
+        </div>
+
+        <!-- selected file info and upload button -->
+        <div id="file-preview" style="display:none; margin-bottom:24px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 20px; background:#fff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+                <div>
+                    <strong id="file-name"></strong>
+                    <span id="file-size" style="color:#999; font-size:13px; margin-left:10px;"></span>
+                </div>
+                <div style="display:flex; gap:8px;">
+                    <button class="btn btn-primary btn-sm" id="upload-btn" onclick="uploadFile()">Upload</button>
+                    <button class="btn btn-outline btn-sm" onclick="cancelUpload()">Cancel</button>
+                </div>
+            </div>
+            <div class="form-group" style="margin-top:10px;">
+                <input type="text" id="doc-title" placeholder="Document title (optional)">
+            </div>
+        </div>
+
+        <!-- document list -->
+        <h2 style="font-size:18px; margin-bottom:16px; color:#333;">Your Documents</h2>
+        <div id="doc-list">
+            <p style="color:#999; text-align:center; padding:30px;">Loading documents...</p>
+        </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+    <script>
+        if (!requireAuth()) {
+            // redirected
+        } else {
+            renderHeader();
+            loadDocuments();
+            setupDragDrop();
+        }
+
+        var selectedFile = null;
+
+        // file input change handler
+        document.getElementById('file-input').addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                selectedFile = e.target.files[0];
+                showFilePreview();
+            }
+        });
+
+        function showFilePreview() {
+            document.getElementById('file-preview').style.display = 'block';
+            document.getElementById('file-name').textContent = selectedFile.name;
+            document.getElementById('file-size').textContent = formatFileSize(selectedFile.size);
+            document.getElementById('upload-area').style.display = 'none';
+        }
+
+        function cancelUpload() {
+            selectedFile = null;
+            document.getElementById('file-preview').style.display = 'none';
+            document.getElementById('upload-area').style.display = 'block';
+            document.getElementById('file-input').value = '';
+            document.getElementById('doc-title').value = '';
+        }
+
+        // drag and drop
+        function setupDragDrop() {
+            var area = document.getElementById('upload-area');
+
+            area.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                area.classList.add('drag-over');
+            });
+
+            area.addEventListener('dragleave', function(e) {
+                area.classList.remove('drag-over');
+            });
+
+            area.addEventListener('drop', function(e) {
+                e.preventDefault();
+                area.classList.remove('drag-over');
+
+                if (e.dataTransfer.files.length > 0) {
+                    selectedFile = e.dataTransfer.files[0];
+
+                    // check file type
+                    var ext = selectedFile.name.split('.').pop().toLowerCase();
+                    if (['pdf', 'docx', 'doc', 'txt'].indexOf(ext) === -1) {
+                        showAlert('alert-container', 'Only PDF, DOCX, and TXT files are allowed', 'error');
+                        selectedFile = null;
+                        return;
+                    }
+
+                    showFilePreview();
+                }
+            });
+        }
+
+        // upload file to server
+        async function uploadFile() {
+            if (!selectedFile) return;
+
+            var uploadBtn = document.getElementById('upload-btn');
+            uploadBtn.disabled = true;
+            uploadBtn.textContent = 'Uploading...';
+
+            var formData = new FormData();
+            formData.append('document', selectedFile);
+
+            var title = document.getElementById('doc-title').value.trim();
+            if (title) {
+                formData.append('title', title);
+            }
+
+            try {
+                var response = await fetchWithAuth('/documents/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response) return;
+
+                var data = await response.json();
+
+                if (response.ok) {
+                    showAlert('alert-container', 'Document uploaded successfully', 'success');
+                    cancelUpload();
+                    loadDocuments();
+                } else {
+                    showAlert('alert-container', data.message || 'Upload failed', 'error');
+                }
+            } catch (err) {
+                showAlert('alert-container', 'Network error during upload', 'error');
+            }
+
+            uploadBtn.disabled = false;
+            uploadBtn.textContent = 'Upload';
+        }
+
+        // load all documents
+        async function loadDocuments() {
+            var docList = document.getElementById('doc-list');
+
+            try {
+                var response = await fetchWithAuth('/documents');
+                if (!response) return;
+
+                var data = await response.json();
+                var docs = data.documents;
+
+                if (!docs || docs.length === 0) {
+                    docList.innerHTML = '<p style="color:#999; text-align:center; padding:30px;">No documents uploaded yet. Upload your first document above.</p>';
+                    return;
+                }
+
+                var html = '';
+                for (var i = 0; i < docs.length; i++) {
+                    var doc = docs[i];
+                    html += renderDocItem(doc);
+                }
+
+                docList.innerHTML = html;
+
+            } catch (err) {
+                docList.innerHTML = '<p style="color:#d9534f; text-align:center; padding:30px;">Failed to load documents.</p>';
+            }
+        }
+
+        function renderDocItem(doc) {
+            var html = '<div class="doc-item" id="doc-' + doc._id + '">';
+            html += '<div class="doc-info" style="flex:1;">';
+            html += '<h4>' + doc.title + '</h4>';
+            html += '<p class="doc-meta">' + doc.originalName + ' | ' + formatFileSize(doc.fileSize) + ' | ' + formatDate(doc.createdAt) + '</p>';
+
+            // show summary if it exists
+            if (doc.summary) {
+                html += '<div class="doc-summary">';
+                html += '<h5>AI Summary</h5>';
+                html += formatSummary(doc.summary);
+                html += '</div>';
+            }
+
+            html += '</div>';
+            html += '<div class="doc-actions">';
+
+            if (!doc.summary) {
+                html += '<button class="btn btn-secondary btn-sm" id="summarise-btn-' + doc._id + '" onclick="summariseDoc(\'' + doc._id + '\')">Summarise with AI</button>';
+            } else {
+                html += '<button class="btn btn-outline btn-sm" id="summarise-btn-' + doc._id + '" onclick="summariseDoc(\'' + doc._id + '\')">Re-summarise</button>';
+            }
+
+            html += '</div>';
+            html += '</div>';
+
+            return html;
+        }
+
+        // call AI summarise endpoint
+        async function summariseDoc(docId) {
+            var btn = document.getElementById('summarise-btn-' + docId);
+            var originalText = btn.textContent;
+
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Processing...';
+
+            try {
+                var response = await fetchWithAuth('/documents/' + docId + '/summarise', {
+                    method: 'POST'
+                });
+
+                if (!response) return;
+
+                var data = await response.json();
+
+                if (response.ok) {
+                    showAlert('alert-container', 'Summary generated successfully', 'success');
+                    // reload to show the summary
+                    loadDocuments();
+                } else {
+                    showAlert('alert-container', data.message || 'Summarisation failed', 'error');
+                    btn.disabled = false;
+                    btn.textContent = originalText;
+                }
+            } catch (err) {
+                showAlert('alert-container', 'Network error during summarisation', 'error');
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }
+        }
+
+        // format summary text - convert markdown-like bullets to html
+        function formatSummary(text) {
+            if (!text) return '';
+
+            // split by newlines and format
+            var lines = text.split('\n');
+            var html = '';
+            var inList = false;
+
+            for (var i = 0; i < lines.length; i++) {
+                var line = lines[i].trim();
+                if (!line) continue;
+
+                // check for bullet points
+                if (line.startsWith('- ') || line.startsWith('* ') || line.startsWith('+ ')) {
+                    if (!inList) {
+                        html += '<ul style="padding-left:20px; margin:8px 0;">';
+                        inList = true;
+                    }
+                    html += '<li>' + line.substring(2) + '</li>';
+                } else {
+                    if (inList) {
+                        html += '</ul>';
+                        inList = false;
+                    }
+                    // remove markdown bold markers
+                    line = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                    html += '<p style="margin:6px 0;">' + line + '</p>';
+                }
+            }
+
+            if (inList) html += '</ul>';
+
+            return html;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Imarticus LMS</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="site-header" id="site-header"></header>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <h2>Create Account</h2>
+            <p class="subtitle">Join our learning platform</p>
+
+            <div id="alert-container"></div>
+
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Minimum 6 characters" required minlength="6">
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirmPassword" placeholder="Re-enter your password" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" id="register-btn">Create Account</button>
+            </form>
+
+            <p class="auth-link">
+                Already have an account? <a href="/login.html">Login here</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+    <script>
+        redirectIfLoggedIn();
+        renderHeader();
+
+        var registerForm = document.getElementById('register-form');
+        var registerBtn = document.getElementById('register-btn');
+
+        registerForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            var name = document.getElementById('name').value.trim();
+            var email = document.getElementById('email').value.trim();
+            var password = document.getElementById('password').value;
+            var confirmPassword = document.getElementById('confirm-password').value;
+
+            // validation
+            if (!name || !email || !password || !confirmPassword) {
+                showAlert('alert-container', 'Please fill in all fields', 'error');
+                return;
+            }
+
+            if (password.length < 6) {
+                showAlert('alert-container', 'Password must be at least 6 characters', 'error');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showAlert('alert-container', 'Passwords do not match', 'error');
+                return;
+            }
+
+            registerBtn.disabled = true;
+            registerBtn.textContent = 'Creating account...';
+
+            try {
+                var response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: name,
+                        email: email,
+                        password: password
+                    })
+                });
+
+                var data = await response.json();
+
+                if (response.ok) {
+                    saveAuth(data.token, data.user);
+                    if (!data.user.hasPaid && data.user.role !== 'admin') {
+                        window.location.href = '/payment.html';
+                    } else {
+                        window.location.href = '/index.html';
+                    }
+                } else {
+                    showAlert('alert-container', data.message || 'Registration failed', 'error');
+                }
+            } catch (err) {
+                showAlert('alert-container', 'Network error. Please try again.', 'error');
+            }
+
+            registerBtn.disabled = false;
+            registerBtn.textContent = 'Create Account';
+        });
+    </script>
+</body>
+</html>

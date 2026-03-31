@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISFB - India's Only UG Program in Finance and Business | Imarticus Learning</title>
+    <meta name="description" content="India's Only UG Program in Finance and Business that gets you Real-World Ready. 3-Year Full-Time Program with BBA degree, ACCA and CFA integrated curriculum.">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <span class="logo-icon">W</span>
+                <span class="logo-text">IMARTICUS<br><small>LEARNING</small></span>
+            </a>
+            <div class="nav-links" id="nav-links">
+                <a href="#about">About ISFB</a>
+                <a href="#curriculum">Curriculum</a>
+                <a href="#outcomes">Outcomes</a>
+                <a href="#campus">Campus Life</a>
+                <a href="#faq">FAQ</a>
+                <a href="#apply" class="nav-cta">Apply Now</a>
+            </div>
+            <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-container">
+            <div class="hero-left">
+                <h1>India's Only UG Program in Finance and Business that gets you <em>Real-World Ready</em></h1>
+                <a href="#apply" class="btn-hero">Download Brochure</a>
+                <div class="deadline-badge">
+                    <span class="deadline-label">Round 3 Application Deadline</span>
+                    <span class="deadline-date">30th April 2026</span>
+                </div>
+            </div>
+            <div class="hero-right">
+                <div class="lead-form" id="apply">
+                    <h3>Start Your Journey in Finance &amp; Business</h3>
+                    <p class="form-subtitle">Fill in your details below and our admissions team will guide you through the next steps.</p>
+                    <form id="lead-form" onsubmit="handleFormSubmit(event)">
+                        <div class="form-row">
+                            <input type="text" placeholder="First Name *" required>
+                            <input type="text" placeholder="Last Name *" required>
+                        </div>
+                        <input type="email" placeholder="Email Address *" required>
+                        <input type="tel" placeholder="Mobile Number *" required>
+                        <select>
+                            <option value="">Select State</option>
+                            <option>Maharashtra</option>
+                            <option>Delhi</option>
+                            <option>Karnataka</option>
+                            <option>Tamil Nadu</option>
+                            <option>Gujarat</option>
+                            <option>Other</option>
+                        </select>
+                        <input type="text" placeholder="City">
+                        <select>
+                            <option value="">Academic Status</option>
+                            <option>12th Appearing</option>
+                            <option>12th Passed</option>
+                            <option>Currently in UG</option>
+                            <option>UG Completed</option>
+                        </select>
+                        <button type="submit" class="form-submit">SUBMIT</button>
+                        <p class="form-terms">By submitting the form I have read and agree to the <a href="#">Terms</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Stats -->
+    <section class="quick-stats">
+        <div class="stats-container">
+            <div class="stat-item">
+                <strong>3-Year Full-Time</strong>
+                <span>UG Program with opt-in Residence</span>
+            </div>
+            <div class="stat-item">
+                <strong>BBA degree</strong>
+                <span>Pursued independently in parallel</span>
+            </div>
+            <div class="stat-item">
+                <strong>ACCA &amp; CFA</strong>
+                <span>Integrated curriculum</span>
+            </div>
+            <div class="stat-item">
+                <strong>Immersions</strong>
+                <span>IIM Visakhapatnam, Singapore &amp; Explore India Mission</span>
+            </div>
+            <div class="stat-item">
+                <strong>Located in</strong>
+                <span>Powai, Mumbai, India's financial hub</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ISFB Edge Section -->
+    <section class="isfb-edge" id="about">
+        <div class="edge-container">
+            <div class="edge-header">
+                <h2>You Graduate with the ISFB <em>Edge</em></h2>
+                <p>We've built your learning journey keeping the best possible tenets in mind</p>
+            </div>
+
+            <div class="edge-cards">
+                <div class="edge-card lime-bg">
+                    <div class="edge-card-img">
+                        <div class="img-placeholder" style="background:#026b55;">Finance Expertise</div>
+                    </div>
+                    <div class="edge-card-text">
+                        <h3>Razorsharp &amp; deep Finance Expertise</h3>
+                        <p>A 3-year journey with deep specialisations in Fintech, Financial Analysis, and Global Accounting; including ACCA and CFA-integrated tracks; unheard of for any Bachelors Programme.</p>
+                    </div>
+                </div>
+
+                <div class="edge-card dark-bg">
+                    <div class="edge-card-img">
+                        <div class="img-placeholder" style="background:#013d32;">Global Immersions</div>
+                    </div>
+                    <div class="edge-card-text">
+                        <h3>An understanding that's both Global and Grounded</h3>
+                        <p>With immersions from Singapore to small-town India, you'll develop a rare, real understanding of how markets work - not just in theory, but in culture, context, and complexity.</p>
+                    </div>
+                </div>
+
+                <div class="edge-card dark-bg">
+                    <div class="edge-card-img">
+                        <div class="img-placeholder" style="background:#013d32;">AI &amp; Finance</div>
+                    </div>
+                    <div class="edge-card-text">
+                        <h3>AI-enabled Decision Making</h3>
+                        <p>From DCF models to pitch decks, you'll learn how to think, build, and lead with GenAI tools; mastering the tech that's redefining Global Finance.</p>
+                    </div>
+                </div>
+
+                <div class="edge-card dark-bg">
+                    <div class="edge-card-img">
+                        <div class="img-placeholder" style="background:#013d32;">Personal Growth</div>
+                    </div>
+                    <div class="edge-card-text">
+                        <h3>Built for the Human Behind the Professional</h3>
+                        <p>College isn't just about careers; it's about character. Through immersive experiences, cultural exchanges, community-led projects, and mentor circles, we help young adults grow into confident, empathetic, and self-aware individuals ready for life, not just work.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin-top:32px;">
+                <a href="#apply" class="btn-hero">Start Your Journey</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Backed by Leaders -->
+    <section class="leaders-section">
+        <div class="leaders-container">
+            <h2>Backed by Leaders that Move Real Markets</h2>
+
+            <div class="leader-tabs">
+                <button class="leader-tab active" onclick="switchLeaderTab(0, this)">Domain Visionaries in Finance</button>
+                <button class="leader-tab" onclick="switchLeaderTab(1, this)">Academic Leaders &amp; Policy Experts</button>
+                <button class="leader-tab" onclick="switchLeaderTab(2, this)">AI, Fintech &amp; New-Age Finance</button>
+            </div>
+
+            <div class="leader-panels">
+                <div class="leader-panel active" id="leader-panel-0">
+                    <div class="leader-grid">
+                        <div class="leader-card">
+                            <div class="leader-avatar">PF</div>
+                            <h4>Philip Fellowes</h4>
+                            <p>Chief Commercial Officer, Asia and Middle East</p>
+                        </div>
+                        <div class="leader-card">
+                            <div class="leader-avatar">AR</div>
+                            <h4>Ajay Rajan</h4>
+                            <p>Country Head, Transaction Banking and New Economy Business</p>
+                        </div>
+                        <div class="leader-card">
+                            <div class="leader-avatar">RM</div>
+                            <h4>Rajat Mathur</h4>
+                            <p>Senior Advisor and Ex Managing Director</p>
+                        </div>
+                        <div class="leader-card">
+                            <div class="leader-avatar">AC</div>
+                            <h4>Akhil Chaturvedi</h4>
+                            <p>Chief Business Officer</p>
+                        </div>
+                        <div class="leader-card">
+                            <div class="leader-avatar">RP</div>
+                            <h4>Ravindra Pandey</h4>
+                            <p>Dy Managing Director, COO</p>
+                        </div>
+                        <div class="leader-card">
+                            <div class="leader-avatar">AR</div>
+                            <h4>Amit Ratanpal</h4>
+                            <p>Founder and MD</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="leader-panel" id="leader-panel-1">
+                    <div class="leader-grid">
+                        <div class="leader-card">
+                            <div class="leader-avatar">GB</div>
+                            <h4>Garima Batra</h4>
+                            <p>MD and Partner</p>
+                        </div>
+                        <div class="leader-card">
+                            <div class="leader-avatar">SG</div>
+                            <h4>Sandip Ghose</h4>
+                            <p>Former Director and Board Member</p>
+                        </div>
+                        <div class="leader-card">
+                            <div class="leader-avatar">VM</div>
+                            <h4>Prof. Vijaya Marisetty</h4>
+                            <p>Dean and Chair Professor</p>
+                        </div>
+                        <div class="leader-card">
+                            <div class="leader-avatar">AJ</div>
+                            <h4>Prof. Apoorva Javadekar</h4>
+                            <p>Chief Economist and Ex Professor</p>
+                        </div>
+                        <div class="leader-card">
+                            <div class="leader-avatar">AT</div>
+                            <h4>Dr. Avantika Tomar</h4>
+                            <p>Partner</p>
+                        </div>
+                        <div class="leader-card">
+                            <div class="leader-avatar">PM</div>
+                            <h4>Pratham Mittal</h4>
+                            <p>Founder</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="leader-panel" id="leader-panel-2">
+                    <div class="leader-grid">
+                        <div class="leader-card">
+                            <div class="leader-avatar">RR</div>
+                            <h4>R.K Rangan</h4>
+                            <p>Chairman</p>
+                        </div>
+                        <div class="leader-card">
+                            <div class="leader-avatar">RS</div>
+                            <h4>Raghvendra Singh</h4>
+                            <p>Senior Partner, CFO Advisory</p>
+                        </div>
+                        <div class="leader-card">
+                            <div class="leader-avatar">AP</div>
+                            <h4>Abhishant Pant</h4>
+                            <p>Founder</p>
+                        </div>
+                        <div class="leader-card">
+                            <div class="leader-avatar">PL</div>
+                            <h4>Prasanna Lohar</h4>
+                            <p>Founder and Head of Innovation</p>
+                        </div>
+                        <div class="leader-card">
+                            <div class="leader-avatar">PS</div>
+                            <h4>Prasar Sharma</h4>
+                            <p>Managing Director</p>
+                        </div>
+                        <div class="leader-card">
+                            <div class="leader-avatar">AS</div>
+                            <h4>Ashish Singhal</h4>
+                            <p>CEO</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Placements Marquee -->
+    <section class="placements-section">
+        <div class="placements-container">
+            <h2>50,000+ Placements in Fortune 500 Companies</h2>
+            <div class="marquee-wrapper">
+                <div class="marquee-track">
+                    <div class="marquee-item"><strong>5000+</strong><span>Placements</span></div>
+                    <div class="marquee-item"><strong>1500+</strong><span>Placements</span></div>
+                    <div class="marquee-item"><strong>1500+</strong><span>Placements</span></div>
+                    <div class="marquee-item"><strong>1200+</strong><span>Placements</span></div>
+                    <div class="marquee-item"><strong>900+</strong><span>Placements</span></div>
+                    <div class="marquee-item"><strong>5000+</strong><span>Placements</span></div>
+                    <div class="marquee-item"><strong>1500+</strong><span>Placements</span></div>
+                    <div class="marquee-item"><strong>1500+</strong><span>Placements</span></div>
+                    <div class="marquee-item"><strong>1200+</strong><span>Placements</span></div>
+                    <div class="marquee-item"><strong>900+</strong><span>Placements</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REAL Pedagogy -->
+    <section class="real-section" id="curriculum">
+        <div class="real-container">
+            <div class="real-intro">
+                <p>Our R.E.A.L. pedagogy is built to collapse the distance between classroom concepts and boardroom decisions.</p>
+            </div>
+
+            <div class="real-tabs">
+                <button class="real-tab active" onclick="switchRealTab(0, this)">R</button>
+                <button class="real-tab" onclick="switchRealTab(1, this)">E</button>
+                <button class="real-tab" onclick="switchRealTab(2, this)">A</button>
+                <button class="real-tab" onclick="switchRealTab(3, this)">L</button>
+            </div>
+
+            <div class="real-panels">
+                <div class="real-panel active" id="real-panel-0">
+                    <h3>Where Boardroom wisdom meets the Classroom</h3>
+                    <p>You step into Closed Door strategy sessions with CXOs, Founders, and Finance Leaders from the World's most respected Organisations. Enter immersive, interactive reflections where you decode Real decisions, dissect business turnarounds, and absorb the thinking playbooks of the Pros who've seen it all.</p>
+                    <p>From IPO architects to Fintech disruptors, this is where experience becomes your competitive edge.</p>
+                </div>
+                <div class="real-panel" id="real-panel-1">
+                    <h3>Real Experiences via Global to Grassroot Immersions</h3>
+                    <p>You transform your understanding of Finance by actually living it - not just by learning it. While high powered Fintech Roundtables in Singapore will help you understand the global landscape, rural finance explorations in India's heartland will shift your lens.</p>
+                    <div class="immersion-cards">
+                        <div class="immersion-card">
+                            <h4>Singapore Immersion</h4>
+                            <p>Travel to Singapore and experience global finance first hand. Field trips to a Trade Port, Local Marketplace, Big 4 office and a Fintech Startup.</p>
+                        </div>
+                        <div class="immersion-card">
+                            <h4>IIM Visakhapatnam Immersion</h4>
+                            <p>Learn and live at the campus, just like an IIM student. 20+ hours across 5-days of intensive academic sessions by senior IIM professors.</p>
+                        </div>
+                        <div class="immersion-card">
+                            <h4>Explore India Mission</h4>
+                            <p>Explore finance where it matters - observe how real India banks, borrows and builds. Work with an NGO and study how finance works in village ecosystems.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="real-panel" id="real-panel-2">
+                    <h3>Real Applications through Simulations &amp; Case Studies</h3>
+                    <p>At ISFB you don't just study Financial Models - you actually build them. Real financiers use judgement and instinct that you will hone through simulated M&amp;A deals, equity research assignments, portfolio strategy exercises and more.</p>
+                    <div class="immersion-cards">
+                        <div class="immersion-card">
+                            <h4>Harvard-style Simulations</h4>
+                            <p>Valuation of early-stage startups. Capital budgeting for manufacturing expansion. Turnaround strategy for a distressed financial services firm.</p>
+                        </div>
+                        <div class="immersion-card">
+                            <h4>Deal-Maker Competitions</h4>
+                            <p>Structuring a private equity deal with exit strategy. Valuation of a Series B startup in the D2C space. Negotiating a buyout between two competing firms.</p>
+                        </div>
+                        <div class="immersion-card">
+                            <h4>DCF Models &amp; Simulations</h4>
+                            <p>Terminal value debates: Perpetuity vs exit multiple. Sensitivity analysis and Monte Carlo scenarios. Forecasting free cash flows for cyclical industries.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="real-panel" id="real-panel-3">
+                    <h3>Master the Foundations with the World's Finest Finance Minds</h3>
+                    <p>Great practice needs great theory. Academic rigour is a foundational pillar at ISFB. Our faculty includes leading economists, Ivy League trained professors, IIM stalwarts and financial scholars with Global Credentials.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curriculum Download -->
+    <section class="curriculum-download">
+        <div class="curriculum-download-inner">
+            <h2>Graduate with a BBA Degree and a Global Finance Specialisation</h2>
+            <p>The Undergraduate in Finance and Business is a full time, on campus program built for flexibility and focus. Students are recommended to pursue a Bachelor of Business Administration (BBA) from NMIMS Centre for Distance and Online Education (CDOE) alongside their ISFB program.</p>
+            <a href="#apply" class="btn-hero">Download Detailed Curriculum</a>
+        </div>
+    </section>
+
+    <!-- Campus Section -->
+    <section class="campus-section" id="campus">
+        <div class="campus-container">
+            <h2>Learning at the ISFB Campus, Mumbai</h2>
+            <p>Your journey begins at our Powai campus - in the heart of India's financial capital, surrounded by global corporates, banks, and fintechs. Here, classroom theory collides with the real world every day.</p>
+        </div>
+    </section>
+
+    <!-- Outcomes Section -->
+    <section class="outcomes-section" id="outcomes">
+        <div class="outcomes-container">
+            <h2>Outcomes that go beyond the Degree</h2>
+            <p>At ISFB, your journey doesn't end at graduation; it accelerates.</p>
+
+            <div class="outcome-tabs">
+                <button class="outcome-tab active" onclick="switchOutcomeTab(0, this)">Placements</button>
+                <button class="outcome-tab" onclick="switchOutcomeTab(1, this)">Entrepreneurship</button>
+                <button class="outcome-tab" onclick="switchOutcomeTab(2, this)">Masters</button>
+            </div>
+
+            <div class="outcome-panels">
+                <div class="outcome-panel active" id="outcome-panel-0">
+                    <h3>India's strongest career launchpad</h3>
+                    <p>Backed by a decade of legacy and experience we've built India's most powerful Career services Engine in finance education.</p>
+                    <div class="outcome-stats">
+                        <div class="outcome-stat">
+                            <strong>50,000+</strong>
+                            <span>Alumni hired by Fortune 500 companies</span>
+                        </div>
+                        <div class="outcome-stat">
+                            <strong>4000+</strong>
+                            <span>Alumni hired by the Big 4s</span>
+                        </div>
+                        <div class="outcome-stat">
+                            <strong>1000+</strong>
+                            <span>Companies hire from us every year</span>
+                        </div>
+                        <div class="outcome-stat">
+                            <strong>1 in 5</strong>
+                            <span>Investment banking professionals is an Imarticus Alumnus</span>
+                        </div>
+                    </div>
+
+                    <h4 style="margin:28px 0 16px; font-size:18px;">Roles our alumni own today</h4>
+                    <div class="role-tabs">
+                        <button class="role-tab active" onclick="switchRoleTab(0, this)">Consulting</button>
+                        <button class="role-tab" onclick="switchRoleTab(1, this)">Finance &amp; Markets</button>
+                        <button class="role-tab" onclick="switchRoleTab(2, this)">Analytics &amp; AI</button>
+                        <button class="role-tab" onclick="switchRoleTab(3, this)">Strategy</button>
+                    </div>
+
+                    <div class="role-panels">
+                        <div class="role-panel active" id="role-panel-0">
+                            <div class="role-card">
+                                <h5>Management Consulting</h5>
+                                <p>Solves large-scale business problems, drives measurable transformation.</p>
+                                <div class="role-meta">
+                                    <span><strong>Rs 12.5 LPA</strong> CTC</span>
+                                    <span><strong>3,800+</strong> Current Job Postings in India</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="role-panel" id="role-panel-1">
+                            <div class="role-card">
+                                <h5>Financial Strategy Analyst</h5>
+                                <p>Advises on growth, capital, M&amp;A, and corporate finance.</p>
+                                <div class="role-meta">
+                                    <span><strong>Rs 10 LPA</strong> CTC</span>
+                                    <span><strong>2,600+</strong> Current Job Postings in India</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="role-panel" id="role-panel-2">
+                            <div class="role-card">
+                                <h5>Strategy Analyst</h5>
+                                <p>Evaluates goals, markets, and performance to shape strategy.</p>
+                                <div class="role-meta">
+                                    <span><strong>Rs 9 LPA</strong> CTC</span>
+                                    <span><strong>5,200+</strong> Current Job Postings in India</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="role-panel" id="role-panel-3">
+                            <div class="role-card">
+                                <h5>Business Analyst</h5>
+                                <p>Bridges business needs with solutions, improves processes.</p>
+                                <div class="role-meta">
+                                    <span><strong>Rs 7 LPA</strong> CTC</span>
+                                    <span><strong>1,000+</strong> Current Job Postings in India</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="outcome-panel" id="outcome-panel-1">
+                    <h3>Powered by bLinC Invest's 25Cr Finance Venture Fund Pledge</h3>
+                    <p>At ISFB we don't just talk about entrepreneurship. We invest in it. In partnership with Blinc Invest, we've pledged a Rs 25 Crore fund to back ventures built by our students.</p>
+                    <div class="immersion-cards" style="margin-top:20px;">
+                        <div class="immersion-card">
+                            <h4>The ISFB x BlinC Fund</h4>
+                            <p>India's largest Fund built within a UG program. Promising student ventures get access to equity-based seed funding and founder coaching.</p>
+                        </div>
+                        <div class="immersion-card">
+                            <h4>The Startup Studio</h4>
+                            <p>A year-round venture lab where students ideate, validate, and build with 1:1 guidance from seasoned founders, VCs, and early-stage operators.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="outcome-panel" id="outcome-panel-2">
+                    <h3>Take the Leap to Global B-Schools</h3>
+                    <p>Through our partnership with Ambitio, you get access to the full-stack platform trusted by thousands of top admits, blending AI-powered strategy with real mentorship.</p>
+                    <div class="immersion-cards" style="margin-top:20px;">
+                        <div class="immersion-card">
+                            <h4>Elite Admissions Tools</h4>
+                            <p>ISFB students get exclusive access to the Ambitio Suite including AI-powered SOP builders, resume optimizers, and profile insights.</p>
+                        </div>
+                        <div class="immersion-card">
+                            <h4>Test Prep, Amplified</h4>
+                            <p>Access Ambitio's full GMAT, GRE, and IELTS prep stack, complete with adaptive learning paths and coaching from top scorers.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin-top:32px;">
+                <a href="#apply" class="btn-hero">Start Your Journey</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials-section">
+        <div class="testimonials-container">
+            <div class="testimonial-slider" id="testimonial-slider">
+                <div class="testimonial-card active">
+                    <p class="testimonial-text">"The learning experience at Imarticus was really good. Our domain trainers were excellent, and they helped me a lot in improving my communication skills. I am thankful to the Imarticus Placement team for giving me opportunities."</p>
+                    <h4>Anandu Nandakumar</h4>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"My experience with Imarticus was great. It significantly helped me build my career in Investment Banking. The curriculum was very helpful, and their guidance enabled me to crack the interview."</p>
+                    <h4>Ankita Jethwa</h4>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"It was such an incredible journey of joy and learning. Throughout my experience with Imarticus, I learned new things and got the correct idea about the industry."</p>
+                    <h4>Harsh Soni</h4>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"The trainers and mentors at Imarticus are supportive. It is an excellent opportunity to explore your career in Finance. Especially with placement support, learners get many opportunities to enhance their careers."</p>
+                    <h4>Priyanka Bhanage</h4>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"I want to thank the Imarticus Learning team for helping me secure my dream job at a young age. The trainer's exceptional teaching methods and advanced curriculum sparked my interest in Finance."</p>
+                    <h4>Raj Jaiswal</h4>
+                </div>
+            </div>
+            <div class="testimonial-dots" id="testimonial-dots"></div>
+        </div>
+    </section>
+
+    <!-- Alumni -->
+    <section class="alumni-section">
+        <div class="alumni-container">
+            <h2>Our Alumni are making their mark across top companies</h2>
+            <div class="alumni-grid">
+                <div class="alumni-card"><div class="alumni-avatar">PA</div><h4>Parikshit Agrawal</h4><p>Consultant</p></div>
+                <div class="alumni-card"><div class="alumni-avatar">DB</div><h4>Divya Boricha</h4><p>Consultant</p></div>
+                <div class="alumni-card"><div class="alumni-avatar">RA</div><h4>Rishabh Agrawal</h4><p>Risk Manager</p></div>
+                <div class="alumni-card"><div class="alumni-avatar">KT</div><h4>Krishna Tibrewala</h4><p>Senior Associate - Inv Banking</p></div>
+                <div class="alumni-card"><div class="alumni-avatar">SA</div><h4>Shayan Adil</h4><p>AVP</p></div>
+                <div class="alumni-card"><div class="alumni-avatar">AI</div><h4>Anagha Iyer</h4><p>Financial Controller</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ISFB Promise -->
+    <section class="promise-section">
+        <div class="promise-container">
+            <h2>The ISFB Promise</h2>
+            <div class="promise-grid">
+                <div class="promise-card">
+                    <h3>World Class Prep</h3>
+                    <div class="promise-stats">
+                        <div><strong>200+</strong><span>Dedicated Employer Partner Experts</span></div>
+                        <div><strong>20+</strong><span>Grillmaster and 1:1 Interview Skills sessions</span></div>
+                        <div><strong>8000+</strong><span>Alumni in Leadership positions</span></div>
+                    </div>
+                </div>
+                <div class="promise-card">
+                    <h3>Internships that give you an Edge</h3>
+                    <p>Dedicated Internship Drives for different specialisations. Exclusive Tie ups with Startup Incubators and Accelerators.</p>
+                </div>
+                <div class="promise-card">
+                    <h3>Unmatched Mentorship</h3>
+                    <div class="promise-stats">
+                        <div><strong>15+</strong><span>Personal Mentors</span></div>
+                        <div><strong>75,000+</strong><span>Alumni strength</span></div>
+                    </div>
+                    <p style="margin-top:12px;">From McKinsey to JP Morgan, our mentors occupy the roles you're preparing to enter.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News -->
+    <section class="news-section">
+        <div class="news-container">
+            <h2>In the News</h2>
+            <p>Stay updated with our latest milestones, media features, and industry accolades.</p>
+            <div class="news-grid">
+                <div class="news-card">
+                    <h4>Imarticus Learning launches Imarticus School of Finance &amp; Business (ISFB)</h4>
+                </div>
+                <div class="news-card">
+                    <h4>SP Jain School of Global Management to host ISFB undergraduate students for immersion week in Singapore</h4>
+                </div>
+                <div class="news-card">
+                    <h4>IIM Visakhapatnam partners with Imarticus Learning's ISFB</h4>
+                </div>
+                <div class="news-card">
+                    <h4>ISFB floats Rs 25 Cr venture fund for student founders</h4>
+                </div>
+                <div class="news-card">
+                    <h4>Imarticus Learning lines up Rs 1,000-crore IPO in FY27</h4>
+                </div>
+                <div class="news-card">
+                    <h4>Imarticus Learning partners with PwC Academy for GenAI program</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+        <div class="faq-container">
+            <h2>FAQ</h2>
+
+            <div class="faq-tabs">
+                <button class="faq-tab active" onclick="switchFaqTab(0, this)">General</button>
+                <button class="faq-tab" onclick="switchFaqTab(1, this)">Admissions</button>
+                <button class="faq-tab" onclick="switchFaqTab(2, this)">Campus &amp; Life</button>
+                <button class="faq-tab" onclick="switchFaqTab(3, this)">Fees &amp; Scholarships</button>
+            </div>
+
+            <div class="faq-panels">
+                <div class="faq-panel active" id="faq-panel-0">
+                    <div class="faq-accordion-item">
+                        <div class="faq-q" onclick="toggleFaqItem(this)">
+                            Will I be able to pursue a master's degree later?
+                            <span>+</span>
+                        </div>
+                        <div class="faq-a">
+                            <p>Yes. With a UGC-recognised parallel degree, you can pursue MBA programmes in India and abroad through exams like CAT and GMAT. You can also take certifications like CPA, CFA, ACCA, CMA and FRM. Government jobs through UPSC are also possible.</p>
+                        </div>
+                    </div>
+                    <div class="faq-accordion-item">
+                        <div class="faq-q" onclick="toggleFaqItem(this)">
+                            What career pathways does ISFB prepare me for?
+                            <span>+</span>
+                        </div>
+                        <div class="faq-a">
+                            <p>ISFB prepares you for placements in corporate roles at IB, consulting, fintech, and wealth management. You can also pursue entrepreneurship backed by BlinC's Rs 25Cr Finance Venture Fund or go for Global Masters powered by the Ambitio platform.</p>
+                        </div>
+                    </div>
+                    <div class="faq-accordion-item">
+                        <div class="faq-q" onclick="toggleFaqItem(this)">
+                            Is the BBA degree recognised?
+                            <span>+</span>
+                        </div>
+                        <div class="faq-a">
+                            <p>Yes. The online BBA offered through the recommended colleges like NMIMS and Symbiosis are fully UGC-recognised and accepted by companies, government bodies, and academic institutions globally. It holds equal weight as a traditional degree.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-panel" id="faq-panel-1">
+                    <div class="faq-accordion-item">
+                        <div class="faq-q" onclick="toggleFaqItem(this)">
+                            What is the admission process?
+                            <span>+</span>
+                        </div>
+                        <div class="faq-a">
+                            <p>Submit the application form on this page, attend a counselling session, and complete the admission formalities. The Round 3 deadline is 30th April 2026.</p>
+                        </div>
+                    </div>
+                    <div class="faq-accordion-item">
+                        <div class="faq-q" onclick="toggleFaqItem(this)">
+                            Who can apply for this program?
+                            <span>+</span>
+                        </div>
+                        <div class="faq-a">
+                            <p>Students who have completed or are appearing for their Class 12 examinations can apply. The program is open to students from all streams - Commerce, Science, and Arts.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-panel" id="faq-panel-2">
+                    <div class="faq-accordion-item">
+                        <div class="faq-q" onclick="toggleFaqItem(this)">
+                            Where is the campus located?
+                            <span>+</span>
+                        </div>
+                        <div class="faq-a">
+                            <p>The ISFB campus is located in Powai, Mumbai - in the heart of India's financial capital, surrounded by global corporates, banks, and fintechs.</p>
+                        </div>
+                    </div>
+                    <div class="faq-accordion-item">
+                        <div class="faq-q" onclick="toggleFaqItem(this)">
+                            Is hostel accommodation available?
+                            <span>+</span>
+                        </div>
+                        <div class="faq-a">
+                            <p>Yes, the program offers an opt-in residence option. Students can choose to stay on campus for a fully immersive learning experience.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-panel" id="faq-panel-3">
+                    <div class="faq-accordion-item">
+                        <div class="faq-q" onclick="toggleFaqItem(this)">
+                            Are scholarships available?
+                            <span>+</span>
+                        </div>
+                        <div class="faq-a">
+                            <p>Yes, ISFB offers merit-based and need-based scholarships. Contact the admissions team for detailed information about scholarship eligibility and application process.</p>
+                        </div>
+                    </div>
+                    <div class="faq-accordion-item">
+                        <div class="faq-q" onclick="toggleFaqItem(this)">
+                            What are the fee payment options?
+                            <span>+</span>
+                        </div>
+                        <div class="faq-a">
+                            <p>The program offers flexible payment options including semester-wise payments and EMI facilities through partner banks. Detailed fee structure is shared during the counselling session.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <span class="logo-icon">W</span>
+                    <span class="logo-text">IMARTICUS<br><small>LEARNING</small></span>
+                </div>
+                <div class="footer-links">
+                    <a href="https://imarticus.org/terms-and-conditions/" target="_blank">Terms of Use</a>
+                    <a href="https://imarticus.org/Privacy-policy/" target="_blank">Privacy Policy</a>
+                    <a href="https://imarticus.org/about-imarticus/" target="_blank">About Us</a>
+                    <a href="https://imarticus.org/contact/" target="_blank">Contact Us</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Imarticus Learning. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

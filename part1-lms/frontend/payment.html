@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Imarticus LMS</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+    <header class="site-header" id="site-header"></header>
+
+    <div class="payment-container">
+        <div class="payment-card">
+            <h2>Complete Your Payment</h2>
+            <p style="color:#777; font-size:14px; margin-top:6px;">One-time payment to access all courses</p>
+
+            <div class="payment-amount">
+                Rs 500 <small>one-time</small>
+            </div>
+
+            <ul class="payment-features">
+                <li>Access to all LMS courses</li>
+                <li>Video lectures and quizzes</li>
+                <li>Document upload and AI summarisation</li>
+                <li>Certificate of completion</li>
+                <li>Lifetime access</li>
+            </ul>
+
+            <div id="alert-container"></div>
+
+            <button class="btn btn-primary btn-block" id="pay-btn" onclick="initiatePayment()" style="font-size:16px; padding:14px;">
+                Pay Rs 500
+            </button>
+
+            <p style="color:#aaa; font-size:12px; margin-top:14px;">
+                Secured by Razorpay. Test mode payment.
+            </p>
+        </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+    <script>
+        if (!requireAuth()) {
+            // redirected
+        } else {
+            renderHeader();
+
+            // check if already paid
+            checkPaymentStatus();
+        }
+
+        async function checkPaymentStatus() {
+            try {
+                var response = await fetchWithAuth('/payment/status');
+                if (!response) return;
+
+                var data = await response.json();
+
+                if (data.hasPaid) {
+                    // already paid, redirect to dashboard
+                    window.location.href = '/index.html';
+                }
+            } catch (err) {
+                // ignore, let them try paying
+            }
+        }
+
+        async function initiatePayment() {
+            var payBtn = document.getElementById('pay-btn');
+            payBtn.disabled = true;
+            payBtn.textContent = 'Processing...';
+
+            try {
+                // create order on server
+                var response = await fetchWithAuth('/payment/create-order', {
+                    method: 'POST'
+                });
+
+                if (!response) return;
+
+                var data = await response.json();
+
+                if (!response.ok) {
+                    showAlert('alert-container', data.message || 'Could not create payment order', 'error');
+                    payBtn.disabled = false;
+                    payBtn.textContent = 'Pay Rs 500';
+                    return;
+                }
+
+                // open razorpay checkout
+                var user = getUser();
+
+                var options = {
+                    key: data.keyId,
+                    amount: data.amount,
+                    currency: data.currency,
+                    name: 'Imarticus LMS',
+                    description: 'Course Access Fee',
+                    order_id: data.orderId,
+                    prefill: {
+                        name: user ? user.name : '',
+                        email: user ? user.email : ''
+                    },
+                    theme: {
+                        color: '#014b3d'
+                    },
+                    handler: function(response) {
+                        // payment successful, verify on server
+                        verifyPayment(response);
+                    },
+                    modal: {
+                        ondismiss: function() {
+                            payBtn.disabled = false;
+                            payBtn.textContent = 'Pay Rs 500';
+                        }
+                    }
+                };
+
+                var rzp = new Razorpay(options);
+                rzp.open();
+
+            } catch (err) {
+                showAlert('alert-container', 'Network error. Please try again.', 'error');
+                payBtn.disabled = false;
+                payBtn.textContent = 'Pay Rs 500';
+            }
+        }
+
+        async function verifyPayment(paymentResponse) {
+            var payBtn = document.getElementById('pay-btn');
+            payBtn.textContent = 'Verifying...';
+
+            try {
+                var response = await fetchWithAuth('/payment/verify', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        razorpay_order_id: paymentResponse.razorpay_order_id,
+                        razorpay_payment_id: paymentResponse.razorpay_payment_id,
+                        razorpay_signature: paymentResponse.razorpay_signature
+                    })
+                });
+
+                if (!response) return;
+
+                var data = await response.json();
+
+                if (response.ok) {
+                    showAlert('alert-container', 'Payment successful! Redirecting...', 'success');
+
+                    // update local user data
+                    var user = getUser();
+                    if (user) {
+                        user.hasPaid = true;
+                        localStorage.setItem('lms_user', JSON.stringify(user));
+                    }
+
+                    // redirect to dashboard after a short delay
+                    setTimeout(function() {
+                        window.location.href = '/index.html';
+                    }, 2000);
+                } else {
+                    showAlert('alert-container', data.message || 'Verification failed', 'error');
+                    payBtn.disabled = false;
+                    payBtn.textContent = 'Pay Rs 500';
+                }
+            } catch (err) {
+                showAlert('alert-container', 'Verification failed. Contact support.', 'error');
+                payBtn.disabled = false;
+                payBtn.textContent = 'Pay Rs 500';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course - Imarticus LMS</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="site-header" id="site-header"></header>
+
+    <!-- course hero -->
+    <div class="course-hero" id="course-hero">
+        <div class="hero-content">
+            <span class="free-badge">Free</span>
+            <h1 id="course-title">Loading...</h1>
+            <div class="hero-meta">
+                <span id="course-instructor"></span>
+                <span id="course-duration"></span>
+                <span id="course-ratings"></span>
+                <span id="course-enrollments"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <!-- includes and learning outcomes -->
+        <div class="course-info-boxes" id="info-boxes">
+            <div class="info-box">
+                <h3>Includes</h3>
+                <ul id="includes-list"></ul>
+            </div>
+            <div class="info-box">
+                <h3>What will I learn?</h3>
+                <ul id="outcomes-list"></ul>
+            </div>
+        </div>
+
+        <!-- video player section (hidden initially) -->
+        <div class="video-section" id="video-section" style="display:none; margin-top:24px;">
+            <div class="video-wrapper">
+                <iframe id="video-player" src="" allowfullscreen></iframe>
+            </div>
+            <h3 class="video-title" id="video-title"></h3>
+        </div>
+
+        <!-- tabs -->
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="switchTab('description')">Description</button>
+            <button class="tab-btn" onclick="switchTab('curriculum')">Curriculum</button>
+            <button class="tab-btn" onclick="switchTab('instructors')">Instructors</button>
+            <button class="tab-btn" onclick="switchTab('faq')">FAQ</button>
+        </div>
+
+        <!-- tab content: description -->
+        <div class="tab-content active" id="tab-description">
+            <p id="course-description" style="font-size:15px; line-height:1.8; color:#555;">Loading...</p>
+        </div>
+
+        <!-- tab content: curriculum -->
+        <div class="tab-content" id="tab-curriculum">
+            <div id="curriculum-accordion">
+                <!-- modules will be loaded here -->
+            </div>
+        </div>
+
+        <!-- tab content: instructors -->
+        <div class="tab-content" id="tab-instructors">
+            <div id="instructor-section">
+                <!-- instructor info here -->
+            </div>
+        </div>
+
+        <!-- tab content: faq -->
+        <div class="tab-content" id="tab-faq">
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    How will I learn?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    When you get access to the course, you will be able to see the modules within the course. Watch the videos whenever you get time and complete the tests for each module. The self-paced videos have been created by subject matter experts to ensure you learn from the best.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Will I get a certificate?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    Yes, when you complete all videos and tests in the course you will be eligible for certification. Your certificate will get unlocked. You can share the certificate with others on social media and add it to your profile.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Is this course free?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    Yes, this course is completely free. You will get access to all videos, quizzes, and a certificate of completion at no cost.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    How long do I have access?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    Once enrolled, you have lifetime access to all course materials. You can learn at your own pace without any time restrictions.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+    <script>
+        if (!requireAuth()) {
+            // redirected to login
+        } else {
+            renderHeader();
+            loadCourseDetails();
+        }
+
+        var currentCourse = null;
+
+        async function loadCourseDetails() {
+            // get course id from url params
+            var params = new URLSearchParams(window.location.search);
+            var courseId = params.get('id');
+
+            if (!courseId) {
+                document.getElementById('course-title').textContent = 'Course not found';
+                return;
+            }
+
+            try {
+                var response = await fetchWithAuth('/courses/' + courseId);
+                if (!response) return;
+
+                var data = await response.json();
+                currentCourse = data.course;
+
+                if (!currentCourse) {
+                    document.getElementById('course-title').textContent = 'Course not found';
+                    return;
+                }
+
+                // update page title
+                document.title = currentCourse.title + ' - Imarticus LMS';
+
+                // fill hero section
+                document.getElementById('course-title').textContent = currentCourse.title;
+                document.getElementById('course-instructor').textContent = 'Created By: ' + currentCourse.instructor;
+                document.getElementById('course-duration').textContent = 'Duration: ' + currentCourse.duration;
+                document.getElementById('course-ratings').textContent = currentCourse.rating + ' (' + currentCourse.totalRatings + ' Ratings)';
+                document.getElementById('course-enrollments').textContent = currentCourse.enrollments + ' Enrollments';
+
+                // fill includes
+                var includesList = document.getElementById('includes-list');
+                var includesHtml = '';
+                for (var i = 0; i < currentCourse.includes.length; i++) {
+                    includesHtml += '<li>' + currentCourse.includes[i] + '</li>';
+                }
+                includesList.innerHTML = includesHtml;
+
+                // fill learning outcomes
+                var outcomesList = document.getElementById('outcomes-list');
+                var outcomesHtml = '';
+                for (var i = 0; i < currentCourse.learningOutcomes.length; i++) {
+                    outcomesHtml += '<li>' + currentCourse.learningOutcomes[i] + '</li>';
+                }
+                outcomesList.innerHTML = outcomesHtml;
+
+                // fill description
+                document.getElementById('course-description').textContent = currentCourse.description;
+
+                // build curriculum accordion
+                buildCurriculum(currentCourse.modules);
+
+                // fill instructor section
+                var instructorHtml = '<div class="instructor-card">'
+                    + '<div class="instructor-avatar">' + currentCourse.instructor.charAt(0) + '</div>'
+                    + '<div class="instructor-details">'
+                    + '<h4>' + currentCourse.instructor + '</h4>'
+                    + '<p>Course instructor with extensive industry experience in the field. Passionate about teaching and helping learners build practical skills.</p>'
+                    + '</div>'
+                    + '</div>';
+                document.getElementById('instructor-section').innerHTML = instructorHtml;
+
+            } catch (err) {
+                document.getElementById('course-title').textContent = 'Error loading course';
+                console.log('Error:', err);
+            }
+        }
+
+        function buildCurriculum(modules) {
+            var container = document.getElementById('curriculum-accordion');
+            var html = '';
+
+            for (var i = 0; i < modules.length; i++) {
+                var mod = modules[i];
+
+                html += '<div class="accordion-item">';
+                html += '<div class="accordion-header" onclick="toggleAccordion(this)">';
+                html += '<span>' + mod.title + ' (' + mod.lessons.length + ' lessons)</span>';
+                html += '<span class="arrow">&#9660;</span>';
+                html += '</div>';
+                html += '<div class="accordion-body">';
+
+                for (var j = 0; j < mod.lessons.length; j++) {
+                    var lesson = mod.lessons[j];
+                    var icon = lesson.type === 'video' ? '&#9654;' : '&#9998;';
+
+                    html += '<div class="lesson-item" data-video="' + (lesson.videoUrl || '') + '" data-title="' + lesson.title + '" onclick="playLesson(this)">';
+                    html += '<span class="lesson-title">';
+                    html += '<span class="lesson-icon">' + icon + '</span>';
+                    html += lesson.title;
+                    html += '</span>';
+                    html += '<span class="lesson-duration">' + lesson.duration + '</span>';
+                    html += '</div>';
+                }
+
+                html += '</div></div>';
+            }
+
+            container.innerHTML = html;
+        }
+
+        function toggleAccordion(header) {
+            var item = header.parentElement;
+            item.classList.toggle('open');
+        }
+
+        function playLesson(lessonEl) {
+            var videoUrl = lessonEl.getAttribute('data-video');
+            var lessonTitle = lessonEl.getAttribute('data-title');
+
+            if (!videoUrl) {
+                alert('This is a quiz/reading - no video available.');
+                return;
+            }
+
+            // mark active
+            var allLessons = document.querySelectorAll('.lesson-item');
+            for (var i = 0; i < allLessons.length; i++) {
+                allLessons[i].classList.remove('active');
+            }
+            lessonEl.classList.add('active');
+
+            // show video player
+            var videoSection = document.getElementById('video-section');
+            videoSection.style.display = 'block';
+
+            document.getElementById('video-player').src = videoUrl;
+            document.getElementById('video-title').textContent = lessonTitle;
+
+            // scroll to video
+            videoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // tab switching
+        function switchTab(tabName) {
+            // hide all tabs
+            var tabs = document.querySelectorAll('.tab-content');
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+
+            // remove active from buttons
+            var buttons = document.querySelectorAll('.tab-btn');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove('active');
+            }
+
+            // show selected tab
+            document.getElementById('tab-' + tabName).classList.add('active');
+
+            // set active button
+            event.target.classList.add('active');
+        }
+
+        // faq toggle
+        function toggleFaq(questionEl) {
+            var faqItem = questionEl.parentElement;
+            faqItem.classList.toggle('open');
+
+            var span = questionEl.querySelector('span');
+            if (faqItem.classList.contains('open')) {
+                span.textContent = '-';
+            } else {
+                span.textContent = '+';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Imarticus LMS</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="site-header" id="site-header"></header>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <h2>Welcome Back</h2>
+            <p class="subtitle">Login to access your courses</p>
+
+            <div id="alert-container"></div>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" id="login-btn">Login</button>
+            </form>
+
+            <p class="auth-link">
+                Don't have an account? <a href="/register.html">Register here</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+    <script>
+        // redirect if already logged in
+        redirectIfLoggedIn();
+        renderHeader();
+
+        var loginForm = document.getElementById('login-form');
+        var loginBtn = document.getElementById('login-btn');
+
+        loginForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            var email = document.getElementById('email').value.trim();
+            var password = document.getElementById('password').value;
+
+            if (!email || !password) {
+                showAlert('alert-container', 'Please fill in all fields', 'error');
+                return;
+            }
+
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Logging in...';
+
+            try {
+                var response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email, password: password })
+                });
+
+                var data = await response.json();
+
+                if (response.ok) {
+                    saveAuth(data.token, data.user);
+                    if (!data.user.hasPaid && data.user.role !== 'admin') {
+                        window.location.href = '/payment.html';
+                    } else {
+                        window.location.href = '/index.html';
+                    }
+                } else {
+                    showAlert('alert-container', data.message || 'Login failed', 'error');
+                }
+            } catch (err) {
+                showAlert('alert-container', 'Network error. Please try again.', 'error');
+            }
+
+            loginBtn.disabled = false;
+            loginBtn.textContent = 'Login';
+        });
+    </script>
+</body>
+</html>

@@ -30,18 +30,24 @@ app.use('/api/courses', courseRoutes);
 app.use('/api/documents', documentRoutes);
 app.use('/api/payment', paymentRoutes);
 
-// serve landing page (part 3)
-app.use('/landing', express.static(path.join(__dirname, '..', 'part3-landing')));
+// serve landing page (part 3) - located in root/part3-landing
+app.use('/landing', express.static(path.join(__dirname, '..', '..', 'part3-landing')));
 
-// serve frontend as static files (part 1)
+// serve frontend as static files (part 1) - located in root/part1-lms/frontend
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
 
 // catch-all: send index.html for any non-api route
 app.get('*', function(req, res) {
-    // dont catch api routes or landing page
-    if (req.path.startsWith('/api') || req.path.startsWith('/landing')) {
+    // dont catch api routes
+    if (req.path.startsWith('/api')) {
         return res.status(404).json({ message: 'Route not found' });
     }
+    
+    // If it's a subpath of /landing that wasn't found by static middleware, 404
+    if (req.path.startsWith('/landing')) {
+        return res.status(404).json({ message: 'Landing page resource not found' });
+    }
+
     res.sendFile(path.join(__dirname, '..', 'frontend', 'index.html'));
 });
 
